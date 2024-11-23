@@ -1,0 +1,226 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil Estudiantil - {{ estudiante.nombre }} {{ estudiante.apellido }}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f4f6f9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background-color: #3b3f5c;
+            height: 100vh;
+            padding-top: 1rem;
+            position: fixed;
+            width: 250px;
+            top: 0;
+            left: 0;
+            color: #fff;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.15);
+        }
+        .sidebar a {
+            color: #c8c8ff;
+            font-weight: 600;
+            display: block;
+            padding: 15px 20px;
+            text-decoration: none;
+            font-size: 1.1rem;
+        }
+        .sidebar a:hover {
+            background-color: #575d90;
+            color: #ffffff;
+        }
+
+        /* Perfil */
+        .profile-container {
+            margin-left: 0;
+            padding: 2rem;
+            max-width: 100%;
+        }
+
+        .profile-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 3px solid #6a4bc3;
+            padding: 5px;
+            object-fit: cover;
+            background-color: #f0f2f5;
+            position: relative;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .edit-avatar {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background-color: #6a4bc3;
+            color: white;
+            border-radius: 50%;
+            padding: 5px 10px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transform: translate(20%, -20%);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+        }
+        .profile-name {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #333;
+            margin-top: 10px;
+        }
+        .profile-role {
+            font-size: 1rem;
+            color: #4a4a4a;
+            font-weight: bold;
+            background-color: #e9eaff;
+            padding: 5px 15px;
+            border-radius: 5px;
+            display: inline-block;
+            margin-top: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-header {
+            font-size: 1.3rem;
+            color: #333;
+            font-weight: bold;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.3rem;
+            border-bottom: 2px solid #6a4bc3;
+        }
+
+        .profile-field {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            width: 100%;
+            padding: 10px;
+            font-size: 1rem;
+            color: #555;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        .change-password {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            transition: background-color 0.3s ease;
+        }
+        .change-password:hover {
+            background-color: #0056b3;
+        }
+
+        .card-section {
+            background-color: #ffffff;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Ajustes responsivos */
+        @media (max-width: 767px) {
+            .profile-container {
+                margin-left: 0;
+                padding: 1rem;
+            }
+            .sidebar {
+                display: none;
+            }
+            .profile-avatar {
+                width: 100px;
+                height: 100px;
+            }
+            .profile-name {
+                font-size: 1.5rem;
+            }
+            .profile-role {
+                font-size: 0.9rem;
+            }
+            .card-section {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+
+    <!-- Profile container -->
+    <div class="profile-container">
+        <div class="profile-header">
+            <div class="position-relative d-inline-block">
+                <img src="{% static 'images/perfil_estudiante.png' %}" alt="Imagen de perfil" class="profile-avatar">
+                <span class="edit-avatar">Editar</span>
+            </div>
+            <h2 class="profile-name">{{ estudiante.nombre }} {{ estudiante.apellido }} {{ estudiante.rut }}  </h2>
+            <span class="profile-role">Estudiante</span>
+        </div>
+
+        <!-- Configuración general -->
+        <div class="card-section">
+            <h3 class="section-header">Configuración General</h3>
+            <br>
+            <div class="mb-3">
+                <label class="form-label"><strong>RUT</strong></label>
+                <input type="text" class="profile-field" value="{{ estudiante.rut }}" readonly>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Nombre</label>
+                <input type="text" class="profile-field" value="{{ estudiante.nombre }}" readonly>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Apellido</label>
+                <input type="text" class="profile-field" value="{{ estudiante.apellido }}" readonly>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Fecha de Nacimiento</label>
+                <input type="text" class="profile-field" value="{{ estudiante.fecha_nacimiento|date:'d M, Y' }}" readonly>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Nivel Educativo</label>
+                <input type="text" class="profile-field" value="{{ estudiante.nivel_educativo }}" readonly>
+            </div>
+        </div>
+
+        <!-- Información del Apoderado -->
+        <div class="card-section">
+            <h3 class="section-header">Información del Apoderado</h3>
+            <div class="mb-3">
+                <label class="form-label">Nombre del Apoderado</label>
+                <input type="text" class="profile-field" value="{{ apoderado.nombre }} {{ apoderado.apellido }}" readonly>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Teléfono del Apoderado</label>
+                <input type="text" class="profile-field" value="{{ apoderado.telefono }}" readonly>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Correo electrónico</label>
+                <input type="email" class="profile-field" value="{{ apoderado.correo }}" readonly>
+            </div>
+            <div class="text-center mt-3">
+                <button class="change-password">Cambiar contraseña</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

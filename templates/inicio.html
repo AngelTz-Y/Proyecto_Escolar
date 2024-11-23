@@ -1,0 +1,316 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}EduConecta{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.css" />
+    <style>
+        /* Fondo general con degradado */
+        body {
+            background: linear-gradient(135deg, #f3f7fa, #e3eaf1);
+            font-family: Arial, sans-serif;
+            color: #333;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: #1c1f26;
+            padding: 1rem;
+            border-bottom: 3px solid #6a4bc3;
+        }
+
+        .navbar-logo {
+            height: 60px;
+            margin-right: 10px;
+            filter: invert(1);
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 1.5rem;
+        }
+
+        .navbar-nav .nav-link {
+            color: #cccccc;
+            font-size: 1rem;
+            margin-left: 20px;
+        }
+
+        /* Contenedor principal */
+        .main-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            margin-top: 2rem;
+        }
+
+        /* Logo de introducción */
+        .logo-introduccion {
+            max-width: 250px;
+            margin-bottom: 20px;
+        }
+
+        /* Estilo del contenedor de cada sección */
+        .info-section {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 1.5rem;
+            background-color: #ffffff;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .info-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .card {
+            flex: 1;
+            max-width: 400px;
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #6a4bc3;
+        }
+
+        .card-body p {
+            font-size: 0.95rem;
+            color: #555;
+        }
+
+        /* Descripción a la derecha */
+        .description {
+            flex: 2;
+            font-size: 1rem;
+            color: #333;
+            line-height: 1.6;
+            padding-left: 1rem;
+            border-left: 3px solid #6a4bc3;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #1c1f26;
+            color: #cccccc;
+            padding: 1rem 0;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .footer a {
+            color: #6a4bc3;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        .navbar-toggler {
+            border-color: transparent;
+        }
+
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='rgba%2880,80,80,0.7%29' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+        }
+
+        .bienvenido {
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            font-size: 2.5rem;
+            color: #ffffff;
+            text-align: center;
+            padding: 20px 40px;
+            margin-top: 20px;
+            background: linear-gradient(135deg, #6a4bc3, #8e6ad8);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+            animation: fadeIn 1.5s ease-out;
+        
+            /* Animación de texto flotante */
+            animation: floatText 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes floatText {
+            from {
+                transform: translateY(0);
+            }
+            to {
+                transform: translateY(-5px);
+            }
+        }
+        
+        .bienvenido::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            opacity: 0;
+            transition: opacity 0.3s;
+            border-radius: 12px;
+        }
+        
+        .bienvenido:hover::after {
+            opacity: 1;
+        }
+        
+        .bienvenido span {
+            background: linear-gradient(to right, #ffffff, #ffb3ff);
+            -webkit-text-fill-color: transparent;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'inicio' %}">
+                <img src="{% static 'images/educonecta.png' %}" alt="EduConecta Logo" class="navbar-logo"> EduConecta
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'registro' %}"><i class="bi bi-person-plus-fill"></i> Registrarse</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}"><i class="bi bi-box-arrow-in-right"></i> Iniciar Sesión</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sección de Introducción -->
+    <div class="container mt-5 text-center">
+        <h2 class="mb-4 bienvenido" data-aos="fade-up">Bienvenido a EduConecta</h2>
+        <img src="{% static 'images/educonecta.png' %}" class="logo-introduccion" alt="Logo de EduConecta" data-aos="zoom-in">
+    </div>
+
+    <!-- Sección de Información con Contenedores Diferenciados -->
+    <div class="container mt-4">
+        <div class="info-section" data-aos="fade-up" data-aos-delay="100">
+            <!-- Tarjeta a la izquierda -->
+            <div class="card">
+                <img src="{% static 'images/mision.jpg' %}" class="card-img-top" alt="Misión">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="bi bi-bullseye"></i> Nuestra Misión</h5>
+                    <p class="card-text">En EduConecta, nuestra misión es facilitar la gestión educativa mediante soluciones digitales, promoviendo una experiencia educativa innovadora y accesible.</p>
+                </div>
+            </div>
+            <!-- Descripción a la derecha -->
+            <div class="description" data-aos="fade-left" data-aos-delay="200">
+                En EduConecta, estamos comprometidos con la transformación digital de las instituciones educativas. Creemos en la importancia de integrar tecnología accesible para todos, mejorando así la calidad de la educación y optimizando los procesos administrativos.
+            </div>
+        </div>
+
+        <div class="info-section" data-aos="fade-up" data-aos-delay="200">
+            <div class="card">
+                <img src="{% static 'images/vision.jpg' %}" class="card-img-top" alt="Visión">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="bi bi-eye"></i> Nuestra Visión</h5>
+                    <p class="card-text">Queremos ser líderes en la transformación digital educativa, brindando herramientas que simplifiquen los procesos y mejoren la comunicación en las instituciones escolares.</p>
+                </div>
+            </div>
+            <div class="description" data-aos="fade-left" data-aos-delay="300">
+                Nuestra visión es liderar la innovación en tecnología educativa, proporcionando soluciones eficientes y adaptadas a las necesidades del siglo XXI. Queremos que cada escuela pueda gestionar y comunicar de manera más eficaz.
+            </div>
+        </div>
+
+        <div class="info-section" data-aos="fade-up" data-aos-delay="300">
+            <div class="card">
+                <img src="{% static 'images/valores.jpg' %}" class="card-img-top" alt="Valores">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="bi bi-heart"></i> Nuestros Valores</h5>
+                    <p class="card-text">Nos guiamos por la innovación, la accesibilidad y la integridad para ofrecer soluciones confiables y eficientes que mejoren la experiencia educativa.</p>
+                </div>
+            </div>
+            <div class="description" data-aos="fade-left" data-aos-delay="400">
+                Los valores de EduConecta están centrados en el usuario. Nos preocupamos por la accesibilidad, la integridad y la innovación, asegurando siempre que nuestros servicios sean inclusivos y de alta calidad para todos los usuarios.
+            </div>
+        </div>
+    </div>
+
+    <!-- Botón de Contacto que abre el Modal -->
+    <div class="container text-center mt-5">
+        <p>Si desea contactarnos! aprete en el boton de abajo </p>
+        <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#contactModal">
+            Contáctanos
+        
+        </button>
+    </div>
+
+    <!-- Modal de Contacto -->
+    <div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="contactModalLabel">Contáctanos</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="contactName" class="form-label">Nombre Completo</label>
+                            <input type="text" class="form-control" id="contactName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="contactEmail" class="form-label">Correo Electrónico</label>
+                            <input type="email" class="form-control" id="contactEmail" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="contactMessage" class="form-label">Mensaje</label>
+                            <textarea class="form-control" id="contactMessage" rows="4" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Enviar Mensaje</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer mt-4">
+        <div class="container">
+            <p class="mb-0">© {{ current_year|default:"2024" }} EduConecta. Todos los derechos reservados.</p>
+            <p class="mb-0">Desarrollado con <i class="bi bi-heart-fill text-danger"></i> por [Tu Nombre o Compañía]</p>
+        </div>
+    </footer>
+
+    <!-- Scripts de Bootstrap y AOS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+    </script>
+</body>
+</html>

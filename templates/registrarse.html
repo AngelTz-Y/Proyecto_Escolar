@@ -1,0 +1,132 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - EduConecta</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f3f4f6;
+            font-family: Arial, sans-serif;
+            color: #333;
+        }
+        h2 {
+            color: #4a4e69;
+            font-weight: bold;
+        }
+        .highlight {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        .btn-primary {
+            background-color: #6c63ff;
+            border: none;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #5752c9;
+        }
+        .toast-container {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 1055;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Registro Estudiantil</h2>
+
+        <!-- Mostrar mensajes como Toasts -->
+        <div class="toast-container">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="toast align-items-center text-bg-{% if message.tags %}{{ message.tags }}{% else %}primary{% endif %} border-0 show" role="alert" aria-live="assertive" aria-atomic="true">
+                        <div class="d-flex">
+                            <div class="toast-body">
+                                {{ message }}
+                            </div>
+                            <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <form method="POST" action="{% url 'registro' %}">
+            {% csrf_token %}
+
+            <!-- Datos del Apoderado -->
+            <div class="highlight">
+                <h4 class="text-primary">Datos del Apoderado</h4>
+                <div class="mb-3">
+                    <label for="rut_apoderado" class="form-label">RUT del Apoderado</label>
+                    <input type="text" class="form-control" id="rut_apoderado" name="rut_apoderado" placeholder="Ingrese el RUT del apoderado" required>
+                </div>
+                <div class="mb-3">
+                    <label for="nombre_apoderado" class="form-label">Nombre</label>
+                    <input type="text" class="form-control" id="nombre_apoderado" name="nombre_apoderado" placeholder="Nombre del apoderado (opcional)">
+                </div>
+                <div class="mb-3">
+                    <label for="apellido_apoderado" class="form-label">Apellido</label>
+                    <input type="text" class="form-control" id="apellido_apoderado" name="apellido_apoderado" placeholder="Apellido del apoderado (opcional)">
+                </div>
+                <div class="mb-3">
+                    <label for="correo_apoderado" class="form-label">Correo Electrónico</label>
+                    <input type="email" class="form-control" id="correo_apoderado" name="correo_apoderado" placeholder="Correo del apoderado (opcional)">
+                </div>
+                <div class="mb-3">
+                    <label for="telefono_apoderado" class="form-label">Teléfono</label>
+                    <input type="text" class="form-control" id="telefono_apoderado" name="telefono_apoderado" placeholder="Teléfono del apoderado (opcional)">
+                </div>
+            </div>
+
+            <!-- Datos del Estudiante -->
+            <div class="highlight">
+                <h4 class="text-primary">Datos del Estudiante</h4>
+                <div class="mb-3">
+                    <label for="rut_estudiante" class="form-label">RUT del Estudiante</label>
+                    <input type="text" class="form-control" id="rut_estudiante" name="rut_estudiante" placeholder="Ingrese el RUT del estudiante" required>
+                </div>
+                <div class="mb-3">
+                    <label for="nombre_estudiante" class="form-label">Nombre</label>
+                    <input type="text" class="form-control" id="nombre_estudiante" name="nombre_estudiante" placeholder="Nombre del estudiante" required>
+                </div>
+                <div class="mb-3">
+                    <label for="apellido_estudiante" class="form-label">Apellido</label>
+                    <input type="text" class="form-control" id="apellido_estudiante" name="apellido_estudiante" placeholder="Apellido del estudiante" required>
+                </div>
+                <div class="mb-3">
+                    <label for="fecha_nacimiento" class="form-label">Fecha de Nacimiento</label>
+                    <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" required>
+                </div>
+            </div>
+
+            <!-- Credenciales Estudiantiles -->
+            <div class="highlight">
+                <h4 class="text-primary">Credenciales Estudiantiles</h4>
+                <div class="mb-3">
+                    <label for="estudiante_username" class="form-label">Nombre de Usuario</label>
+                    <input type="text" class="form-control" id="estudiante_username" name="estudiante_username" placeholder="Usuario del estudiante" required>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Contraseña</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña del estudiante" required>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100 mt-3">Registrar</button>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

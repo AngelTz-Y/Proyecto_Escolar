@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horario Escolar</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <style>
+        body {
+            background-color: #1c1c1c;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+        }
+        .schedule-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+        .schedule-header {
+            text-align: center;
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .schedule-header h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+        .month-display {
+            font-size: 1.2rem;
+            color: #aaaaaa;
+            margin-top: 5px;
+            margin-bottom: 20px;
+        }
+        #calendar-date {
+            display: inline-block;
+            background-color: #333;
+            color: #ffffff;
+            border: 1px solid #555;
+            border-radius: 5px;
+            padding: 8px;
+            font-size: 1rem;
+            text-align: center;
+            width: 200px;
+            margin-bottom: 10px;
+        }
+        .table-schedule {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #333333;
+            margin-top: 20px;
+        }
+        .table-schedule th, .table-schedule td {
+            border: 1px solid #555555;
+            padding: 10px;
+            text-align: center;
+            font-size: 1rem;
+            color: #ffffff;
+        }
+        .table-schedule th {
+            background-color: #1f1f1f;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        .hour-cell {
+            width: 10%;
+            font-weight: bold;
+            color: #dddddd;
+        }
+        .day-cell {
+            width: 12.5%;
+            height: 80px;
+            color: #bbbbbb;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="schedule-container">
+        <!-- Encabezado del horario -->
+        <div class="schedule-header">
+            <h1>Horario Escolar</h1>
+            <p class="month-display" id="month-display" style="font-weight: bold;">Mes actual: </p>
+            <!-- Input de Flatpickr para seleccionar la semana -->
+            <input type="text" id="calendar-date" readonly>
+        </div>
+        
+        <!-- Tabla del horario -->
+        <table class="table-schedule">
+            <thead>
+                <tr>
+                    <th>Horario</th>
+                    <th id="day1">Lunes</th>
+                    <th id="day2">Martes</th>
+                    <th id="day3">Miércoles</th>
+                    <th id="day4">Jueves</th>
+                    <th id="day5">Viernes</th>
+                    <th id="day6">Sábado</th>
+                    <th id="day7">Domingo</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for hora in horas %}
+                    <tr>
+                        <td class="hour-cell">{{ hora }}</td>
+                        {% for dia in dias %}
+                            <td class="day-cell">
+                                <!-- Dejar en blanco para llenarse después -->
+                            </td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
+    <script>
+        const dayElements = [
+            document.getElementById('day1'),
+            document.getElementById('day2'),
+            document.getElementById('day3'),
+            document.getElementById('day4'),
+            document.getElementById('day5'),
+            document.getElementById('day6'),
+            document.getElementById('day7')
+        ];
+
+        const monthDisplay = document.getElementById('month-display');
+        let currentWeekStart = new Date();
+        currentWeekStart.setDate(currentWeekStart.getDate() - ((currentWeekStart.getDay() + 6) % 7));
+
+        function updateWeekDays() {
+            const options = { weekday: 'long', day: 'numeric' };
+            for (let i = 0; i < dayElements.length; i++) {
+                const dayDate = new Date(currentWeekStart);
+                dayDate.setDate(currentWeekStart.getDate() + i);
+                dayElements[i].innerText = dayDate.toLocaleDateString('es-CL', options);
+            }
+            monthDisplay.innerText = "Mes actual: " + currentWeekStart.toLocaleDateString('es-CL', { month: 'long', year: 'numeric' });
+        }
+
+        flatpickr("#calendar-date", {
+            inline: true,
+            dateFormat: "Y-m-d",
+            defaultDate: currentWeekStart,
+            locale: "es",
+            firstDayOfWeek: 1,  // Comienza en lunes
+            onChange: function(selectedDates, dateStr, instance) {
+                const selectedDate = new Date(selectedDates[0]);
+                selectedDate.setDate(selectedDate.getDate() - ((selectedDate.getDay() + 6) % 7));
+                currentWeekStart = selectedDate;
+                updateWeekDays();
+            }
+        });
+
+        updateWeekDays();
+    </script>
+</body>
+</html>

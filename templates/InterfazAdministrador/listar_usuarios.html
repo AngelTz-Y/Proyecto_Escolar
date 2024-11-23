@@ -1,0 +1,159 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Usuarios</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f8f9fa;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .navbar {
+            background-color: #212529;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+            height: 60px;
+        }
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white !important;
+        }
+        .navbar-nav .nav-link {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: white !important;
+        }
+        .navbar-nav .nav-link:hover {
+            color: #6a11cb !important;
+        }
+        .container {
+            flex: 1;
+            margin-top: 80px;
+            margin-bottom: 20px;
+        }
+        .card {
+            border: none;
+            border-radius: 10px;
+            background: white;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        .icon {
+            font-size: 2.5rem;
+            color: #2575fc;
+            margin-bottom: 15px;
+        }
+        footer {
+            background-color: #212529;
+            color: white;
+            padding: 15px 0;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        footer a {
+            color: #6a11cb;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="{% static 'images/educonecta.png' %}" alt="EduConecta Logo" height="40" class="me-2">
+                EduConecta
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"><i class="bi bi-list"></i></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link d-flex align-items-center" href="#">
+                            <i class="bi bi-person-circle me-1"></i> Mi Perfil
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link d-flex align-items-center" href="#">
+                            <i class="bi bi-box-arrow-right me-1"></i> Cerrar Sesión
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Contenido Principal -->
+    <div class="container">
+        <div class="text-center mb-4">
+            <h2 class="fw-bold mt-4">Gestión de Usuarios</h2>
+            <p>Administre los usuarios por rol</p>
+        </div>
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+            <div class="col">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="bi bi-person-badge-fill icon"></i>
+                        <h5 class="card-title">Listar Estudiantes</h5>
+                        <p>Consulta y administra los estudiantes registrados en el sistema.</p>
+                        <a class="btn btn-primary mt-auto" href="{% url 'listar_estudiantes' %}">Ver Estudiantes</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="bi bi-mortarboard-fill icon"></i>
+                        <h5 class="card-title">Listar Profesores</h5>
+                        <p>Consulta y administra los profesores registrados en el sistema.</p>
+                        <a class="btn btn-primary mt-auto" href="{% url 'listar_profesores' %}">Ver Profesores</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="bi bi-shield-lock-fill icon"></i>
+                        <h5 class="card-title">Listar Administradores</h5>
+                        <p>Consulta y administra los administradores registrados en el sistema.</p>
+                        <a class="btn btn-primary mt-auto" href="{% url 'listar_administradores' %}">Ver Administradores</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pie de Página -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 EduConecta. Todos los derechos reservados.</p>
+            <p>
+                <a href="#">Términos de Servicio</a> | 
+                <a href="#">Política de Privacidad</a> | 
+                <a href="#">Contacto</a>
+            </p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

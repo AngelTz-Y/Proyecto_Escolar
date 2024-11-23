@@ -1,0 +1,155 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historial de Cambios</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .navbar {
+            background-color: #4e4cb3;
+        }
+
+        .navbar-brand img {
+            height: 35px;
+        }
+
+        .btn-volver {
+            background-color: #6c63ff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .btn-volver:hover {
+            background-color: #4e4cb3;
+        }
+
+        .bubble-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .bubble {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 20px;
+            border-radius: 20px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1s ease-in-out;
+            color: #212529;
+        }
+
+        .bubble-create {
+            background-color: #e8f8e8;
+            border-left: 5px solid #28a745;
+        }
+
+        .bubble-delete {
+            background-color: #fce7e7;
+            border-left: 5px solid #dc3545;
+        }
+
+        .bubble-update {
+            background-color: #fff9e7;
+            border-left: 5px solid #ffc107;
+        }
+
+        .bubble-user {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .bubble-description {
+            flex: 1;
+        }
+
+        .bubble-date {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+
+        .new-label {
+            font-size: 0.8rem;
+            color: white;
+            background-color: #28a745;
+            border-radius: 5px;
+            padding: 2px 6px;
+            margin-left: 10px;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="{% static 'images/educonecta.png' %}" alt="EduConecta Logo">
+                EduConecta
+            </a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="btn btn-volver" href="{% url 'administrador_dashboard' %}">Volver</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenido -->
+    <div class="container">
+        <h2 class="text-center mt-5">Historial de Cambios</h2>
+        <div class="bubble-container">
+            {% for cambio in cambios %}
+                <div class="bubble {% if cambio.tipo_accion == 'create' %}bubble-create{% elif cambio.tipo_accion == 'delete' %}bubble-delete{% elif cambio.tipo_accion == 'update' %}bubble-update{% endif %}">
+                    <div>
+                        <span class="bubble-user">{{ cambio.usuario.username }}</span>
+                        <span class="bubble-description">{{ cambio.descripcion }}</span>
+                        {% if cambio.es_nuevo %}
+                            <span class="new-label">New</span>
+                        {% endif %}
+                    </div>
+                    <span class="bubble-date">{{ cambio.fecha|date:"d/m/Y H:i" }}</span>
+                </div>
+            {% empty %}
+                <p class="text-center">No hay cambios registrados.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
